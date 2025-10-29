@@ -4,11 +4,13 @@ import { thunk } from 'redux-thunk';
 import logger from 'redux-logger';
 // reducers
 import { leaders } from './leaders';
+import { dishes } from './dishes';
+import { comments } from './comments';
 
 export const ConfigureStore = () => {
   const store = createStore(
-    combineReducers({ leaders }),
-    applyMiddleware(thunk, logger)
+    combineReducers({ leaders, dishes, comments }),
+    applyMiddleware(thunk, logger),
   );
   return store;
 };
