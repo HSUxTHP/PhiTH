@@ -1,2 +1,2 @@
 export const baseUrl = 'https://phith.onrender.com/';
-// export const baseUrl = 'https://qlsach.io.vn/phith/';
+// export const baseUrl = 'https://phith.qlsach.io.vn/';

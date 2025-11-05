@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, FlatList, View } from 'react-native';
 import { ScrollView } from 'react-native-virtualized-view';
 import { Card, ListItem, Avatar } from 'react-native-elements';
-import { LEADERS } from '../shared/leaders';
+// import { LEADERS } from '../shared/leaders';
 //import { LEADERS } from '../shared/leaders';
 import { baseUrl } from '../shared/baseUrl';
 
