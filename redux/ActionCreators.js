@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 // const json = '.json';
-const delay = 10000;
+const delay = 0;
 
 // leaders
 export const fetchLeaders = () => (dispatch) => {
@@ -76,6 +76,7 @@ const addComments = (comments) => ({
 // promotions
 export const fetchPromos = () => (dispatch) => {
   dispatch(promosLoading());
+  setTimeout(() => {
   return fetch(baseUrl + 'promotions')
     .then((response) => {
       if (!response.ok) throw Error('Error ' + response.status + ': ' + response.statusText);
@@ -83,6 +84,7 @@ export const fetchPromos = () => (dispatch) => {
     })
     .then((promos) => dispatch(addPromos(promos)))
     .catch((error) => dispatch(promosFailed(error.message)));
+  }, delay);
 };
 const promosLoading = () => ({
   type: ActionTypes.PROMOS_LOADING
@@ -94,4 +96,12 @@ const addPromos = (promos) => ({
 const promosFailed = (errmess) => ({
   type: ActionTypes.PROMOS_FAILED,
   payload: errmess
+});
+// favorites
+export const postFavorite = (dishId) => (dispatch) => {
+  dispatch(addFavorite(dishId));
+};
+const addFavorite = (dishId) => ({
+  type: ActionTypes.ADD_FAVORITE,
+  payload: dishId
 });
