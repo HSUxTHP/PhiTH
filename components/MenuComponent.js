@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
+import Loading from './LoadingComponent';
 import { ListItem, Avatar } from 'react-native-elements';
 //import Dishdetail from './DishdetailComponent';
 // import { DISHES } from '../shared/dishes';
@@ -22,14 +23,18 @@ class Menu extends Component {
     // };
   }
   render() {
-    return (
-      // <View style={{ flex: 1 }}>
-          <FlatList  data={this.props.dishes.dishes} 
+    if (this.props.dishes.isLoading) {
+      return (<Loading />);
+    } else if (this.props.dishes.errMess) {
+      return (<Text>{this.props.errMess}</Text>);
+    } else {
+      return (
+        <FlatList  data={this.props.dishes.dishes} 
           renderItem={({ item, index }) => this.renderMenuItem(item, index)}
           keyExtractor={(_, index) => index.toString()}
         />
-      /* </View> */
-    );
+      );
+    }
   }
   renderMenuItem(item, index) {
     const { navigate } = this.props.navigation;

@@ -2,18 +2,20 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 // const json = '.json';
-const json = '';
+const delay = 10000;
 
 // leaders
 export const fetchLeaders = () => (dispatch) => {
   dispatch(leadersLoading());
-  return fetch(baseUrl + 'leaders' + json)
+  setTimeout(() => {
+  return fetch(baseUrl + 'leaders')
     .then((response) => {
       if (!response.ok) throw Error('Error ' + response.status + ': ' + response.statusText);
       else return response.json();
     })
     .then((leaders) => dispatch(addLeaders(leaders)))
     .catch((error) => dispatch(leadersFailed(error.message)));
+  }, delay);
 };
 const leadersLoading = () => ({
   type: ActionTypes.LEADERS_LOADING
@@ -30,13 +32,15 @@ const addLeaders = (leaders) => ({
 // dishes
 export const fetchDishes = () => (dispatch) => {
   dispatch(dishesLoading());
-  return fetch(baseUrl + 'dishes' + json)
+  setTimeout(() => {
+  return fetch(baseUrl + 'dishes')
     .then((response) => {
       if (!response.ok) throw Error('Error ' + response.status + ': ' + response.statusText);
       else return response.json();
     })
     .then((dishes) => dispatch(addDishes(dishes)))
     .catch((error) => dispatch(dishesFailed(error.message)));
+  }, delay);
 };
 const dishesLoading = () => ({
   type: ActionTypes.DISHES_LOADING
@@ -52,7 +56,7 @@ const addDishes = (dishes) => ({
 
 // comments
 export const fetchComments = () => (dispatch) => {
-  return fetch(baseUrl + 'comments' + json)
+  return fetch(baseUrl + 'comments')
     .then((response) => {
       if (!response.ok) throw Error('Error ' + response.status + ': ' + response.statusText);
       else return response.json();
