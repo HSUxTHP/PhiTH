@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 // const json = '.json';
-const delay = 0;
+const delay = 2000;
 
 // leaders
 export const fetchLeaders = () => (dispatch) => {
@@ -72,6 +72,25 @@ const addComments = (comments) => ({
   type: ActionTypes.ADD_COMMENTS,
   payload: comments
 });
+const addComment = (comment) => ({
+  type: ActionTypes.ADD_COMMENT,
+  payload: comment
+});
+
+export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+    const newComment = {
+        dishId,
+        rating,
+        author,
+        comment,
+        date: new Date().toISOString()
+    };
+
+    // delay 1s
+    setTimeout(() => {
+    dispatch(addComment(newComment));
+    }, 1000);
+};
 
 // promotions
 export const fetchPromos = () => (dispatch) => {
