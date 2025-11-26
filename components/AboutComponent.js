@@ -7,6 +7,7 @@ import { Card, ListItem, Avatar } from 'react-native-elements';
 //import { LEADERS } from '../shared/leaders';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
+import * as Animatable from 'react-native-animatable';
 
 class RenderHistory extends Component {
   render() {
@@ -23,7 +24,7 @@ class RenderHistory extends Component {
 
 class RenderLeadership extends Component {
   render() {
-      if (this.props.isLoading) {
+    if (this.props.isLoading) {
       return (
         <Card>
           <Card.Title>Corporate Leadership</Card.Title>
@@ -42,12 +43,12 @@ class RenderLeadership extends Component {
     } else {
       return (
         <Card>
-        <Card.Title>Corporate Leadership</Card.Title>
-        <Card.Divider />
-        <FlatList data={this.props.leaders}
-          renderItem={({ item, index }) => this.renderLeaderItem(item, index)}
-          keyExtractor={(item) => item.id.toString()} />
-      </Card>
+          <Card.Title>Corporate Leadership</Card.Title>
+          <Card.Divider />
+          <FlatList data={this.props.leaders}
+            renderItem={({ item, index }) => this.renderLeaderItem(item, index)}
+            keyExtractor={(item) => item.id.toString()} />
+        </Card>
       );
     }
   }
@@ -84,11 +85,15 @@ class About extends Component {
   render() {
     return (
       <ScrollView>
-        <RenderHistory />
-        <RenderLeadership
-      leaders={this.props.leaders.leaders}
-      isLoading={this.props.leaders.isLoading}
-      errMess={this.props.leaders.errMess} />
+        <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+          <RenderHistory />
+        </Animatable.View>
+        <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
+          <RenderLeadership
+            leaders={this.props.leaders.leaders}
+            isLoading={this.props.leaders.isLoading}
+            errMess={this.props.leaders.errMess} />
+        </Animatable.View>
       </ScrollView>
     );
   }

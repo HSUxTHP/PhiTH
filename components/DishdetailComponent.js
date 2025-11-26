@@ -5,6 +5,7 @@ import { Card, Image, Icon, Input, Button, Rating } from 'react-native-elements'
 import { COMMENTS } from '../shared/comments';*/
 import { baseUrl } from '../shared/baseUrl';
 import { ScrollView } from 'react-native-virtualized-view';
+import * as Animatable from 'react-native-animatable';
 
 class RenderDish extends Component {
   render() {
@@ -76,12 +77,12 @@ class RenderComments extends Component {
 
     return (
       <View key={index} style={{ margin: 10 }}>
-      <Text style={{ fontSize: 14 }}>{item.comment}</Text>
-      <Text>
-        <Text style={{ fontSize: 12, color: '#FFD700' }}>{filledStars}</Text>
-        <Text style={{ fontSize: 12, color: '#FFD700' }}>{emptyStars}</Text>
-      </Text>
-      <Text style={{ fontSize: 12 }}>{'-- ' + item.author + ', ' + formattedDate} </Text>
+        <Text style={{ fontSize: 14 }}>{item.comment}</Text>
+        <Text>
+          <Text style={{ fontSize: 12, color: '#FFD700' }}>{filledStars}</Text>
+          <Text style={{ fontSize: 12, color: '#FFD700' }}>{emptyStars}</Text>
+        </Text>
+        <Text style={{ fontSize: 12 }}>{'-- ' + item.author + ', ' + formattedDate} </Text>
       </View>
     );
   };
@@ -161,8 +162,12 @@ class Dishdetail extends Component {
     const favorite = this.props.favorites.some((el) => el === dishId);
     return (
       <ScrollView>
-        <RenderDish dish={dish} favorite={favorite} onPressFavorite={() => this.markFavorite(dishId)} onPressComment={() => this.toggleModal()} />
-
+        <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+          <RenderDish dish={dish} favorite={favorite} onPressFavorite={() => this.markFavorite(dishId)} onPressComment={() => this.toggleModal()} />
+        </Animatable.View>
+        <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
+          <RenderComments comments={comments} />
+        </Animatable.View>
         <Modal visible={this.state.showModal} onRequestClose={() => this.toggleModal()}>
           <CommentForm
             onSubmit={(rating, author, comment) => {
@@ -172,8 +177,6 @@ class Dishdetail extends Component {
             onCancel={() => this.toggleModal()}
           />
         </Modal>
-
-        <RenderComments comments={comments} />
       </ScrollView>
     );
   }
