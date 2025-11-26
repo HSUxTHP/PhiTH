@@ -101,6 +101,27 @@ function AboutNavigatorScreen() {
   );
 }
 
+import Favorites from './FavoriteComponent';
+function FavoritesNavigatorScreen() {
+  const FavoritesNavigator = createStackNavigator();
+  return (
+    <FavoritesNavigator.Navigator initialRouteName='Favorites'
+      screenOptions={{
+        headerStyle: { backgroundColor: '#7cc' },
+        headerTintColor: '#fff',
+        headerTitleStyle: { color: '#fff' }
+      }}>
+      <FavoritesNavigator.Screen name='Favorites' component={Favorites}
+        options={({ navigation }) => ({
+          headerTitle: 'My Favorites',
+          headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
+        })} />
+      <FavoritesNavigator.Screen name='Dishdetail' component={Dishdetail}
+        options={{ headerTitle: 'Dish Detail' }} />
+    </FavoritesNavigator.Navigator>
+  );
+}
+
 function ReservationNavigatorScreen() {
   const ReservationNavigator = createStackNavigator();
   return (
@@ -166,6 +187,11 @@ function MainNavigatorScreen() {
         options={{
           title: 'Reserve Table', headerShown: false,
           drawerIcon: ({ focused, size }) => (<Icon name='cutlery' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />)
+        }} />
+        <MainNavigator.Screen name='FavoritesScreen' component={FavoritesNavigatorScreen}
+        options={{
+          title: 'My Favorites', headerShown: false,
+          drawerIcon: ({ focused, size }) => (<Icon name='heart' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />)
         }} />
     </MainNavigator.Navigator>
   );
