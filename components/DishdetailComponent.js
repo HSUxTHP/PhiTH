@@ -14,6 +14,10 @@ class RenderDish extends Component {
       if (dx < -200) return 1; // right to left
       return 0;
     };
+    const recognizeComment = ({ dx }) => {
+      if (dx > 200) return true; // left to right
+      return false;
+    };
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (e, gestureState) => { return true; },
       onPanResponderEnd: (e, gestureState) => {
@@ -26,6 +30,8 @@ class RenderDish extends Component {
               { text: 'OK', onPress: () => { this.props.favorite ? alert('Already favorite') : this.props.onPressFavorite() } },
             ]
           );
+        } else if (recognizeComment(gestureState)) {
+          this.props.onPressComment();
         }
         return true;
       }
