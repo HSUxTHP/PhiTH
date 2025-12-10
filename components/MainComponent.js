@@ -7,6 +7,8 @@ import { View, Text, Linking } from 'react-native';
 import { baseUrl } from '../shared/baseUrl';
 import Reservation from './ReservationComponent';
 import Login from './LoginComponent';
+import Register from './RegisterComponent';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // redux
 import { connect } from 'react-redux';
 import { fetchLeaders, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
@@ -17,16 +19,34 @@ const mapDispatchToProps = (dispatch) => ({
   fetchPromos: () => dispatch(fetchPromos())
 });
 
+function TabNavigatorScreen() {
+  const TabNavigator = createBottomTabNavigator();
+  return (
+    <TabNavigator.Navigator initialRouteName='Login'>
+      <TabNavigator.Screen name='Login' component={Login}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={color} />)
+        }} />
+      <TabNavigator.Screen name='Register' component={Register}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (<Icon name='user-plus' type='font-awesome' size={size} color={color} />)
+        }} />
+    </TabNavigator.Navigator>
+  );
+}
+
 function LoginNavigatorScreen() {
   const LoginNavigator = createStackNavigator();
   return (
-    <LoginNavigator.Navigator initialRouteName='Login'
+    <LoginNavigator.Navigator initialRouteName='LoginRegister'
       screenOptions={{
         headerStyle: { backgroundColor: '#7cc' },
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' }
       }}>
-      <LoginNavigator.Screen name='Login' component={Login}
+      <LoginNavigator.Screen name='LoginRegister' component={TabNavigatorScreen}
         options={({ navigation }) => ({
           headerTitle: 'Login',
           headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
